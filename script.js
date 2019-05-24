@@ -1,8 +1,7 @@
 const historia = document.querySelector('.maravilhosas__box');
-const butao = document.querySelector('#bolinho')
 const request = new XMLHttpRequest();
 
-request.open('GET', 'https://theblackwomanhistory.firebaseio.com/.json', true);
+request.open('GET', 'http://localhost:5001/maravilhosas', true);
 
 request.onload = function () {
     const data = JSON.parse(this.response);
@@ -22,14 +21,48 @@ request.onload = function () {
             }
 
             else {
-                img.setAttribute('src', './img/img-mulher')
+                img.setAttribute('src', './img/img-mulher.png')
             }
+            const name = document.createElement('p');
+            name.textContent = mulheresNegras.title;
+            card.appendChild(name);
 
             card.appendChild(img);
             historia.appendChild(card)
         }
+
         )
     }
 }
 request.send()
+
+const butao = document.getElementById('botao');
+butao.addEventListener("click", (evento) => { //dar uma ação para o botão de clicar
+    evento.preventDefault();
+
+    const nome = document.querySelector(".Nome").value; //.value é pq está dentro input, pega o valor do campo nome
+    const entrada = document.querySelector(".Entrada").value;
+
+    fetch('http://localhost:5001/maravilhosas', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'title': nome,
+            'metadata': {
+                'image': {
+                    'url': entrada,
+                }
+            }
+
+        })
+    })
+
+
+
+})
+
+
 
