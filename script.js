@@ -29,6 +29,32 @@ request.onload = function () {
 
             card.appendChild(img);
             historia.appendChild(card)
+
+            const botao = document.createElement("button");
+            
+            botao.textContent = "Remover"; //textContent é alteração do texto
+            botao.setAttribute("pegarId", mulheresNegras.id )
+            card.appendChild(botao)
+            botao.addEventListener("click", () => {
+
+                const thisCard = botao.parentElement;
+                const cardPai = thisCard.parentElement;
+
+                fetch("http://localhost:5001/maravilhosas"+ mulheresNegras.id, {
+                    method: 'DELETE',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                   
+                })
+                    .then(() => {
+                        cardPai.removeChild(thisCard)
+                    })
+                    .catch((erro) => {
+                        console.log(erro);
+                    })
+            })
         }
 
         )
@@ -63,6 +89,3 @@ butao.addEventListener("click", (evento) => { //dar uma ação para o botão de 
 
 
 })
-
-
-
